@@ -4,7 +4,8 @@ public enum EGamePiece
 {
     White,
     Black,
-    Empty,
-    WhiteBig,
-    BlackBig
+    EmptyPlayable,
+    EmptyNotPlayable,
+    WhiteKing,
+    BlackKing,
 }

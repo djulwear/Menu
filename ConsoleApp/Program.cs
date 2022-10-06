@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using ConsoleUI;
 using GameBrain;
-using MenuSystem;
 using Domain;
 using DAL;
 using DAL.FileSystem;
+using MenuSystem;
 
 var gameOptions = new CheckersOptions();
 var game = new CheckersBrain(gameOptions);
@@ -61,10 +61,26 @@ var choice = mainMenu.RunMenu();
 
 string DoNewGame()
 {
-
-    var game = new CheckersBrain(8, 8);
-
+    game = new CheckersBrain(gameOptions);
     UI.DrawGameBoard(game.GetBoard());
-    Console.WriteLine("New game method+-");
-    return "---";
+    return "-";
+}
+
+
+string ListGameOptions()
+{
+    foreach (var name in repo.GetGameOptionsList())
+    {
+        Console.WriteLine(name);
+    }
+
+    return "-";
+}
+
+string LoadGameOptions()
+{
+    Console.Write("Options name:");
+    var optionsName = Console.ReadLine();
+    gameOptions = repo.GetGameOptions(optionsName);
+    return "-";
 }

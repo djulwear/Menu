@@ -9,5 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\DAL.FileSystem\DAL.FileSystem.csproj" />
+    <ProjectReference Include="..\ConsoleAppColor\ConsoleAppColor.csproj" />
   </ItemGroup>
 </Project>

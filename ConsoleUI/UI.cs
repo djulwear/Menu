@@ -10,31 +10,40 @@ public static class UI
     {
         var cols = board.GetLength(0);
         var rows = board.GetLength(1);
+        var line = board.GetLength(1);
 
-        for (int i = 0; i < rows; i++)
+        Console.Write(" ");
+        for (int i = 0; i < rows; i++ ,line--)
         {
+            //отрисовка горизонтальных линий
             for (int j = 0; j < cols; j++)
             {
                 Console.Write("+---");
             }
 
             Console.WriteLine("+");
+            Console.Write(line);
 
+            //заполнение блоков 
             for (int j = 0; j < cols; j++)
             {
-                Console.Write("| ");
+
+                Console.Write("|");
                 var pieceStr =
-                    board[j, i] == null
-                        ? " "
+                    board[j, i] == EGamePiece.EmptyNotPlayable
+                    ? "III"
+                    :board[j, i] == null
+                        ? "  "
                         : board[j, i] == EGamePiece.Black
-                            ? "X"
-                            : "O";
+                            ? " X"
+                            : " O";
 
                 Console.Write(pieceStr);
                 Console.Write(" ");
             }
 
             Console.WriteLine("|");
+            Console.Write(" ");
         }
 
         for (int j = 0; j < cols; j++)
