@@ -1,64 +1,81 @@
-﻿using Domain;
+﻿//Copy pasted
+using GameBrain;
 
-namespace GameBrain;
+namespace ConsoleUI;
 
-public class CheckersBrain
+public static class UI
 {
-    private readonly CheckersGameState _state;
-    private int v1;
-    private int v2;
-
-    public CheckersBrain(CheckersOptions options)
+    public static void DrawGameBoard(EGamePiece?[,] board)
     {
-        var boardWidth = options.Width;
-        var boardHeight = options.Height;
+        var cols = board.GetLength(0);
+        var rows = board.GetLength(1);
+        var line = board.GetLength(1);
 
-        if (boardWidth < 4 || boardHeight < 4)
+        Console.Write(" ");
+        for (int i = 0; i < rows; i++, line--)
         {
-            throw new ArgumentException("Board size too small");
-        }
-
-
-        _state = new CheckersGameState();
-
-        _state.GameBoard = new EGamePiece?[boardWidth, boardHeight];
-        //Othello Example Mid-board XO/OX
-        var initialX = (boardWidth / 2) - 1;
-        var initialY = (boardHeight / 2) - 1;
-        //_state.GameBoard[initialX, initialY] = EGamePiece.Black;
-        //_state.GameBoard[initialX + 1, initialY] = EGamePiece.White;
-
-        //Not Playable Board
-
-        var cols = boardWidth;
-        var rows = boardHeight;
-        var line = 1;
-
-        for (int columb=0; columb < cols; columb++,line++)
-        {
-            if (columb % 2 == 0 && line % 2 == 0)
+            //отрисовка горизонтальных линий
+            for (int j = 0; j < cols; j++)
             {
-                _state.GameBoard[columb, line] = EGamePiece.EmptyNotPlayable;
+                Console.Write("+---");
             }
-            else
+
+            Console.WriteLine("+");
+            Console.Write(line);
+
+            //заполнение блоков 
+            for (int j = 0; j < cols; j++)
             {
-                if (columb % 2 != 0 && line % 2 != 0)
+                if (j % 2 == 0 && line % 2 == 0)
                 {
-                    _state.GameBoard[columb, line] = EGamePiece.EmptyNotPlayable;
+                    Console.Write("|III");
+                }
+                else
+                {
+                    if (j % 2 != 0 && line % 2 != 0)
+                    {
+                        Console.Write("|III");
+                    }
+                    else
+                    {
+                        Console.Write("|");
+                        var pieceStr =
+                        board[j, i] == EGamePiece.EmptyNotPlayable
+                        ? "III"
+                        : board[j, i] == null
+                            ? "  "
+                            : board[j, i] == EGamePiece.Black
+                                ? " X"
+                                : " O";
+
+                        Console.Write(pieceStr);
+                        Console.Write(" ");
+                    }
                 }
             }
+
+            Console.WriteLine("|");
+            Console.Write(" ");
         }
 
-        //var marker = 
-        //var 
-        //_state.GameBoard[marker,marker] = EGamePiece.EmpryNotPlayable;
+        for (int j = 0; j < cols; j++)
+        {
+            Console.Write("+---");
+        }
 
-    }
+        Console.WriteLine("+");
 
-    public EGamePiece?[,] GetBoard()
-    {
-        var res = new EGamePiece?[_state.GameBoard.GetLength(0), _state.GameBoard.GetLength(1)];
-        Array.Copy(_state.GameBoard, res, _state.GameBoard.Length);
-        return res;
+        /*
+            A    B
+          +---+---+
+        2 | X | O |
+          +---+---+
+        1 | O | X |
+          +---+---+
+
+
+
+
+         */
     }
 }
